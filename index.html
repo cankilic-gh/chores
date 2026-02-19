@@ -415,54 +415,52 @@
       {
         id: 'A',
         letter: 'A',
-        title: 'Hijyen / Cop',
+        title: 'Cop',
         tasks: [
-          'Lavabo ve ayna temizligi',
-          'Cop kovalarini bosaltma',
-          'Genel hijyen kontrolu',
-          'Sabun ve kagit havlu kontrolu',
-          'Tuvalet temizligi'
+          'Coplerin atilmasi (dolu/bos farketmez)'
         ],
-        monthEndTask: 'Derinlemesine dezenfeksiyon'
+        monthEndTasks: [
+          'El supurgesi ile mutfak cop arkasinin supurulmesi'
+        ]
       },
       {
         id: 'B',
         letter: 'B',
         title: 'Mutfak',
         tasks: [
-          'Bulasiklari yikama/makineye yerlestirme',
-          'Tezgah ve ocak temizligi',
-          'Buzdolabi duzenleme',
-          'Cay/kahve hazir tutma',
-          'Mutfak malzemesi eksik bildirimi'
+          'Bulasik makinasinin calistirilmasi',
+          'Yemek masasinin silinmesi'
         ],
-        monthEndTask: 'Buzdolabi temizligi + SKT kontrolu'
+        monthEndTasks: [
+          'Mutfak ve buzdolabinin temizlenmesi',
+          'Atilacaklarin atilmasi (SKT kontrolu)',
+          'Clorox bezle genel mutfak temizligi (kahve lekesi vb)'
+        ]
       },
       {
         id: 'C',
         letter: 'C',
-        title: 'Robot / Teknik',
+        title: 'Robot',
         tasks: [
-          'Robot supurgeyi calistir ve bosalt',
-          'Kablo ve sarj duzeni',
-          'Teknik cihaz kontrolu',
-          'Klima/isitma ayarlari',
-          'Aydinlatma kontrolu'
+          'Robotun sularinin temizlenmesi ve doldurulmasi',
+          'Ofisin robot temizlik yapacak sekilde birakilmasi'
         ],
-        monthEndTask: 'Tum elektronik cihaz bakimi'
+        monthEndTasks: [
+          'Robotun hazne ve cleaning tray temizlenmesi'
+        ]
       },
       {
         id: 'D',
         letter: 'D',
-        title: 'Lojistik / Detay',
+        title: 'Havlu / Banyo',
         tasks: [
-          'Genel duzenleme ve toplama',
-          'Posta/kargo takibi',
-          'Ofis malzemesi envanteri',
-          'Bitki sulama',
-          'Pencere ve cam temizligi'
+          'El ve mutfak havlularinin yikanmasi'
         ],
-        monthEndTask: 'Aylik envanter raporu + siparis'
+        monthEndTasks: [
+          'Banyo halilarinin yikanmasi',
+          'Lavabo ve tuvaletin temizlenmesi',
+          'Pencere iclerinin supurulmesi'
+        ]
       }
     ];
 
@@ -589,8 +587,8 @@
         ROLES.forEach((role, ri) => {
           const person = getPersonForRole(ri, friday);
           let tasksHtml = role.tasks.map(t => `<li>${t}</li>`).join('');
-          if (isLast) {
-            tasksHtml += `<li class="special">${role.monthEndTask}</li>`;
+          if (isLast && role.monthEndTasks) {
+            tasksHtml += role.monthEndTasks.map(t => `<li class="special">${t}</li>`).join('');
           }
 
           html += `
