@@ -515,51 +515,47 @@
     // Roles with detailed tasks
     const ROLES = [
       {
-        id: 'A',
-        letter: 'A',
-        title: 'Cop',
+        id: 'cop',
+        title: 'Çöp',
         tasks: [
-          'Coplerin atilmasi (dolu/bos farketmez)'
+          'Çöplerin atılması (dolu/boş farketmez)'
         ],
         monthEndTasks: [
-          'El supurgesi ile mutfak cop arkasinin supurulmesi'
+          'El süpürgesi ile mutfak çöp arkasının süpürülmesi'
         ]
       },
       {
-        id: 'B',
-        letter: 'B',
+        id: 'mutfak',
         title: 'Mutfak',
         tasks: [
-          'Bulasik makinasinin calistirilmasi',
-          'Masa ve tezgahin silinmesi'
+          'Bulaşık makinasının çalıştırılması',
+          'Masa ve tezgahın silinmesi'
         ],
         monthEndTasks: [
-          'Mutfak ve buzdolabinin temizlenmesi',
-          'Clorox bezle genel mutfak temizligi (kahve lekesi vb)'
+          'Mutfak ve buzdolabının temizlenmesi',
+          'Clorox bezle genel mutfak temizliği (kahve lekesi vb)'
         ]
       },
       {
-        id: 'C',
-        letter: 'C',
+        id: 'robot',
         title: 'Robot',
         tasks: [
-          'Robot sularinin temizlenmesi ve yenilenmesi'
+          'Robot sularının temizlenmesi ve yenilenmesi'
         ],
         monthEndTasks: [
           'Robotun hazne ve cleaning tray temizlenmesi'
         ]
       },
       {
-        id: 'D',
-        letter: 'D',
+        id: 'banyo',
         title: 'Havlu / Banyo',
         tasks: [
-          'El ve mutfak havlularinin yikanmasi'
+          'El ve mutfak havlularının yıkanması'
         ],
         monthEndTasks: [
-          'Banyo halilarinin yikanmasi',
+          'Banyo halılarının yıkanması',
           'Lavabo ve tuvaletin temizlenmesi',
-          'Pencere iclerinin supurulmesi'
+          'Pencere içlerinin süpürülmesi'
         ]
       }
     ];
@@ -699,7 +695,6 @@
           html += `
             <div class="role-column">
               <div class="role-header">
-                <div class="role-letter">${role.letter}</div>
                 <div class="role-title">${role.title}</div>
               </div>
               <div class="role-person">${person}</div>
