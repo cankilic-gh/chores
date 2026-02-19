@@ -5,20 +5,6 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Chores - Aylik Gorev Takvimi</title>
   <style>
-    :root {
-      --bg-dark: #0f0f1a;
-      --bg-card: rgba(255, 255, 255, 0.05);
-      --border-glass: rgba(255, 255, 255, 0.1);
-      --text-primary: #ffffff;
-      --text-secondary: rgba(255, 255, 255, 0.7);
-      --text-muted: rgba(255, 255, 255, 0.5);
-      --neon-cyan: #00f3ff;
-      --neon-pink: #ff00ff;
-      --neon-green: #00ff88;
-      --neon-orange: #ff8800;
-      --shadow-glow: 0 0 30px rgba(0, 243, 255, 0.1);
-    }
-
     * {
       margin: 0;
       padding: 0;
@@ -26,15 +12,16 @@
     }
 
     body {
-      font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, sans-serif;
-      background: var(--bg-dark);
-      color: var(--text-primary);
+      font-family: 'Courier New', Courier, monospace;
+      background: #fefefe;
+      color: #222;
       min-height: 100vh;
       padding: 20px;
+      line-height: 1.5;
     }
 
     .container {
-      max-width: 1600px;
+      max-width: 1200px;
       margin: 0 auto;
     }
 
@@ -42,70 +29,66 @@
     header {
       text-align: center;
       margin-bottom: 30px;
+      border-bottom: 3px double #222;
+      padding-bottom: 20px;
     }
 
     h1 {
-      font-size: 2.5rem;
-      font-weight: 300;
-      letter-spacing: 2px;
-      background: linear-gradient(135deg, var(--neon-cyan), var(--neon-pink));
-      -webkit-background-clip: text;
-      -webkit-text-fill-color: transparent;
-      background-clip: text;
-      margin-bottom: 10px;
+      font-size: 2rem;
+      font-weight: bold;
+      letter-spacing: 8px;
+      text-transform: uppercase;
+      margin-bottom: 8px;
     }
 
     .month-display {
-      font-size: 1.4rem;
-      color: var(--text-secondary);
-      margin-bottom: 5px;
+      font-size: 1.2rem;
+      text-transform: uppercase;
+      letter-spacing: 2px;
     }
 
     /* Staff Input Section */
     .staff-section {
-      background: var(--bg-card);
-      border: 1px solid var(--border-glass);
-      border-radius: 16px;
-      padding: 24px;
-      margin-bottom: 30px;
-      backdrop-filter: blur(10px);
+      border: 2px solid #222;
+      padding: 20px;
+      margin-bottom: 24px;
+      background: #f9f9f9;
     }
 
     .staff-header {
       display: flex;
       justify-content: space-between;
       align-items: center;
-      margin-bottom: 20px;
+      margin-bottom: 16px;
+      border-bottom: 1px solid #ccc;
+      padding-bottom: 12px;
     }
 
     .staff-header h2 {
-      font-size: 1.2rem;
-      font-weight: 500;
-      color: var(--text-secondary);
+      font-size: 1rem;
+      text-transform: uppercase;
+      letter-spacing: 2px;
     }
 
     .staff-count {
       display: flex;
       align-items: center;
-      gap: 12px;
+      gap: 10px;
     }
 
     .staff-count button {
-      width: 36px;
-      height: 36px;
-      border-radius: 50%;
-      border: 1px solid var(--border-glass);
-      background: var(--bg-card);
-      color: var(--text-primary);
-      font-size: 1.2rem;
+      width: 28px;
+      height: 28px;
+      border: 2px solid #222;
+      background: #fff;
+      font-size: 1rem;
+      font-family: inherit;
       cursor: pointer;
-      transition: all 0.2s;
     }
 
     .staff-count button:hover:not(:disabled) {
-      background: var(--neon-cyan);
-      color: var(--bg-dark);
-      border-color: var(--neon-cyan);
+      background: #222;
+      color: #fff;
     }
 
     .staff-count button:disabled {
@@ -113,265 +96,247 @@
       cursor: not-allowed;
     }
 
-    .staff-count span {
-      font-size: 1.1rem;
-      min-width: 80px;
-      text-align: center;
-    }
-
     .staff-inputs {
       display: flex;
       flex-wrap: wrap;
-      gap: 12px;
+      gap: 16px;
     }
 
     .staff-input {
       flex: 1;
-      min-width: 150px;
-      max-width: 250px;
+      min-width: 180px;
     }
 
     .staff-input label {
       display: block;
-      font-size: 0.8rem;
-      color: var(--text-muted);
-      margin-bottom: 6px;
+      font-size: 0.85rem;
+      margin-bottom: 4px;
+      text-transform: uppercase;
+      letter-spacing: 1px;
     }
 
     .staff-input input {
       width: 100%;
-      padding: 12px 16px;
-      border-radius: 10px;
-      border: 1px solid var(--border-glass);
-      background: rgba(0, 0, 0, 0.3);
-      color: var(--text-primary);
+      padding: 8px 12px;
+      border: 2px solid #222;
+      background: #fff;
+      font-family: inherit;
       font-size: 1rem;
-      transition: all 0.2s;
     }
 
     .staff-input input:focus {
       outline: none;
-      border-color: var(--neon-cyan);
-      box-shadow: 0 0 15px rgba(0, 243, 255, 0.2);
+      background: #fffde7;
     }
 
     /* Month Navigation */
     .month-nav {
       display: flex;
       justify-content: center;
-      align-items: center;
-      gap: 20px;
-      margin-bottom: 30px;
+      gap: 12px;
+      margin-bottom: 24px;
     }
 
     .month-nav button {
-      padding: 10px 20px;
-      border-radius: 10px;
-      border: 1px solid var(--border-glass);
-      background: var(--bg-card);
-      color: var(--text-primary);
+      padding: 8px 16px;
+      border: 2px solid #222;
+      background: #fff;
+      font-family: inherit;
       font-size: 0.9rem;
       cursor: pointer;
-      transition: all 0.2s;
+      text-transform: uppercase;
+      letter-spacing: 1px;
     }
 
     .month-nav button:hover {
-      background: var(--neon-cyan);
-      color: var(--bg-dark);
-      border-color: var(--neon-cyan);
+      background: #222;
+      color: #fff;
     }
 
     .month-nav button.today {
-      background: linear-gradient(135deg, var(--neon-cyan), var(--neon-pink));
-      border: none;
+      background: #222;
+      color: #fff;
     }
 
-    /* Monthly Calendar Grid */
-    .month-grid {
-      display: flex;
-      flex-direction: column;
-      gap: 24px;
+    /* Weekly Schedule */
+    .week-section {
+      border: 2px solid #222;
+      margin-bottom: 20px;
+      background: #fff;
     }
 
-    .week-row {
-      background: var(--bg-card);
-      border: 1px solid var(--border-glass);
-      border-radius: 16px;
-      padding: 20px;
-      backdrop-filter: blur(10px);
-    }
-
-    .week-row.month-end {
-      border-color: var(--neon-orange);
-      box-shadow: 0 0 20px rgba(255, 136, 0, 0.2);
+    .week-section.month-end {
+      border-width: 3px;
+      background: #fffde7;
     }
 
     .week-header {
+      background: #222;
+      color: #fff;
+      padding: 12px 16px;
       display: flex;
       justify-content: space-between;
       align-items: center;
-      margin-bottom: 16px;
-      padding-bottom: 12px;
-      border-bottom: 1px solid var(--border-glass);
+    }
+
+    .week-header.month-end-header {
+      background: #444;
     }
 
     .week-date {
-      font-size: 1.2rem;
-      font-weight: 600;
-      color: var(--text-primary);
+      font-size: 1rem;
+      text-transform: uppercase;
+      letter-spacing: 2px;
     }
 
     .week-badge {
-      display: inline-block;
-      background: linear-gradient(135deg, var(--neon-orange), var(--neon-pink));
-      color: white;
-      padding: 4px 12px;
-      border-radius: 12px;
-      font-size: 0.75rem;
-      font-weight: 600;
+      font-size: 0.8rem;
+      padding: 4px 10px;
+      background: #fff;
+      color: #222;
+      text-transform: uppercase;
+      letter-spacing: 1px;
     }
 
-    .roles-row {
+    .week-content {
       display: grid;
       grid-template-columns: repeat(4, 1fr);
-      gap: 16px;
     }
 
-    .role-mini {
-      background: rgba(0, 0, 0, 0.2);
-      border-radius: 12px;
+    .role-column {
       padding: 16px;
-      position: relative;
-      border-left: 3px solid var(--role-color);
+      border-right: 1px solid #ddd;
     }
 
-    .role-mini[data-role="hygiene"] { --role-color: var(--neon-cyan); }
-    .role-mini[data-role="kitchen"] { --role-color: var(--neon-green); }
-    .role-mini[data-role="robot"] { --role-color: var(--neon-orange); }
-    .role-mini[data-role="logistics"] { --role-color: var(--neon-pink); }
-
-    .role-mini-header {
-      display: flex;
-      align-items: center;
-      gap: 8px;
-      margin-bottom: 10px;
+    .role-column:last-child {
+      border-right: none;
     }
 
-    .role-mini-icon {
-      font-size: 1.2rem;
+    .role-header {
+      border-bottom: 2px solid #222;
+      padding-bottom: 8px;
+      margin-bottom: 12px;
     }
 
-    .role-mini-title {
-      font-size: 0.85rem;
-      font-weight: 600;
-      color: var(--role-color);
+    .role-letter {
+      font-size: 1.4rem;
+      font-weight: bold;
     }
 
-    .role-mini-person {
-      display: flex;
-      align-items: center;
-      gap: 8px;
-    }
-
-    .role-mini-avatar {
-      width: 28px;
-      height: 28px;
-      border-radius: 50%;
-      background: linear-gradient(135deg, var(--role-color), rgba(255,255,255,0.2));
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      font-weight: 600;
+    .role-title {
       font-size: 0.75rem;
+      text-transform: uppercase;
+      letter-spacing: 1px;
+      color: #666;
+      margin-top: 2px;
     }
 
-    .role-mini-name {
-      font-size: 1rem;
-      font-weight: 500;
-      color: var(--text-primary);
+    .role-person {
+      font-size: 1.1rem;
+      font-weight: bold;
+      margin-bottom: 12px;
+      padding: 6px 0;
+      border-bottom: 1px dashed #ccc;
+    }
+
+    .role-tasks {
+      list-style: none;
+    }
+
+    .role-tasks li {
+      font-size: 0.85rem;
+      padding: 4px 0;
+      padding-left: 16px;
+      position: relative;
+      color: #444;
+    }
+
+    .role-tasks li::before {
+      content: '>';
+      position: absolute;
+      left: 0;
+      color: #222;
+    }
+
+    .role-tasks li.special {
+      font-weight: bold;
+      color: #222;
+      margin-top: 8px;
+      padding-top: 8px;
+      border-top: 1px dotted #999;
+    }
+
+    .role-tasks li.special::before {
+      content: '*';
     }
 
     /* Print Button */
     .print-btn {
       position: fixed;
-      bottom: 30px;
-      right: 30px;
-      width: 60px;
-      height: 60px;
-      border-radius: 50%;
-      border: none;
-      background: linear-gradient(135deg, var(--neon-cyan), var(--neon-pink));
-      color: white;
-      font-size: 1.5rem;
+      bottom: 24px;
+      right: 24px;
+      width: 50px;
+      height: 50px;
+      border: 3px solid #222;
+      background: #fff;
+      font-size: 1.2rem;
       cursor: pointer;
-      box-shadow: 0 4px 20px rgba(0, 243, 255, 0.4);
-      transition: all 0.3s;
+      font-family: inherit;
     }
 
     .print-btn:hover {
-      transform: scale(1.1);
-      box-shadow: 0 6px 30px rgba(0, 243, 255, 0.6);
+      background: #222;
+      color: #fff;
     }
 
     /* Footer */
     footer {
       text-align: center;
       padding: 20px;
-      color: var(--text-muted);
-      font-size: 0.85rem;
+      font-size: 0.8rem;
+      color: #666;
+      border-top: 1px solid #ddd;
+      margin-top: 20px;
     }
 
-    /* Mobile Responsive */
-    @media (max-width: 1024px) {
-      .roles-row {
+    /* Mobile */
+    @media (max-width: 900px) {
+      .week-content {
         grid-template-columns: repeat(2, 1fr);
       }
+
+      .role-column {
+        border-bottom: 1px solid #ddd;
+      }
+
+      .role-column:nth-child(2) {
+        border-right: none;
+      }
     }
 
-    @media (max-width: 768px) {
+    @media (max-width: 600px) {
       body {
-        padding: 15px;
+        padding: 12px;
       }
 
-      h1 {
-        font-size: 1.8rem;
+      .week-content {
+        grid-template-columns: 1fr;
       }
 
-      .staff-section {
-        padding: 16px;
-      }
-
-      .staff-header {
-        flex-direction: column;
-        gap: 15px;
+      .role-column {
+        border-right: none;
       }
 
       .staff-inputs {
         flex-direction: column;
       }
 
-      .staff-input {
-        max-width: none;
-      }
-
-      .roles-row {
-        grid-template-columns: 1fr;
-      }
-
       .month-nav {
         flex-wrap: wrap;
       }
-
-      .print-btn {
-        bottom: 20px;
-        right: 20px;
-        width: 50px;
-        height: 50px;
-        font-size: 1.2rem;
-      }
     }
 
-    /* Print Styles - US Letter Landscape */
+    /* Print Styles */
     @media print {
       @page {
         size: letter landscape;
@@ -379,31 +344,8 @@
       }
 
       body {
-        background: white !important;
-        color: black !important;
         padding: 0;
-        font-size: 10pt;
-      }
-
-      .container {
-        max-width: none;
-      }
-
-      header {
-        margin-bottom: 12px;
-      }
-
-      h1 {
-        background: none !important;
-        -webkit-text-fill-color: black !important;
-        color: black !important;
-        font-size: 16pt;
-        font-weight: 600;
-      }
-
-      .month-display {
-        color: #333 !important;
-        font-size: 12pt;
+        font-size: 9pt;
       }
 
       .staff-section,
@@ -413,77 +355,22 @@
         display: none !important;
       }
 
-      .month-grid {
-        gap: 12px;
-      }
-
-      .week-row {
-        background: white !important;
-        border: 2px solid #333 !important;
-        padding: 12px;
+      .week-section {
         page-break-inside: avoid;
-        border-radius: 8px;
-      }
-
-      .week-row.month-end {
-        border-color: #000 !important;
-        border-width: 3px;
-        box-shadow: none !important;
+        margin-bottom: 12px;
       }
 
       .week-header {
-        margin-bottom: 10px;
-        padding-bottom: 8px;
+        padding: 8px 12px;
       }
 
-      .week-date {
-        color: black !important;
-        font-size: 11pt;
-      }
-
-      .week-badge {
-        background: #333 !important;
-        color: white !important;
-        font-size: 8pt;
-        padding: 2px 8px;
-      }
-
-      .roles-row {
-        display: grid;
-        grid-template-columns: repeat(4, 1fr);
-        gap: 10px;
-      }
-
-      .role-mini {
-        background: #f8f8f8 !important;
+      .role-column {
         padding: 10px;
-        border-left: 4px solid #333 !important;
       }
 
-      .role-mini-header {
-        margin-bottom: 6px;
-      }
-
-      .role-mini-icon {
-        font-size: 1rem;
-      }
-
-      .role-mini-title {
-        color: #333 !important;
-        font-size: 9pt;
-      }
-
-      .role-mini-avatar {
-        background: #333 !important;
-        color: white;
-        width: 22px;
-        height: 22px;
-        font-size: 0.65rem;
-      }
-
-      .role-mini-name {
-        color: black !important;
-        font-size: 10pt;
+      .role-tasks li {
+        font-size: 8pt;
+        padding: 2px 0 2px 12px;
       }
     }
   </style>
@@ -491,7 +378,7 @@
 <body>
   <div class="container">
     <header>
-      <h1>CHORES</h1>
+      <h1>Chores</h1>
       <div class="month-display" id="monthDisplay"></div>
     </header>
 
@@ -499,48 +386,94 @@
       <div class="staff-header">
         <h2>Kadro</h2>
         <div class="staff-count">
-          <button type="button" id="decreaseStaff" aria-label="Kisi azalt">-</button>
-          <span id="staffCountDisplay">4 Kisi</span>
-          <button type="button" id="increaseStaff" aria-label="Kisi ekle">+</button>
+          <button type="button" id="decreaseStaff">-</button>
+          <span id="staffCountDisplay">4</span>
+          <button type="button" id="increaseStaff">+</button>
         </div>
       </div>
       <div class="staff-inputs" id="staffInputs"></div>
     </section>
 
     <nav class="month-nav">
-      <button type="button" id="prevMonth">&larr; Onceki Ay</button>
+      <button type="button" id="prevMonth">&larr; Onceki</button>
       <button type="button" id="todayMonth" class="today">Bu Ay</button>
-      <button type="button" id="nextMonth">Sonraki Ay &rarr;</button>
+      <button type="button" id="nextMonth">Sonraki &rarr;</button>
     </nav>
 
-    <main class="month-grid" id="monthGrid"></main>
+    <main id="monthGrid"></main>
 
     <footer>
-      <p>Chores &copy; 2026 | TheGridBase</p>
+      Chores 2026
     </footer>
   </div>
 
-  <button type="button" class="print-btn" id="printBtn" aria-label="Yazdir">
-    &#128424;
-  </button>
+  <button type="button" class="print-btn" id="printBtn" title="Yazdir">P</button>
 
   <script>
-    // Roles Definition
+    // Roles with detailed tasks
     const ROLES = [
-      { id: 'hygiene', icon: '🧹', title: 'HİJYEN / ÇÖP' },
-      { id: 'kitchen', icon: '🍽️', title: 'MUTFAK' },
-      { id: 'robot', icon: '🤖', title: 'ROBOT / TEKNİK' },
-      { id: 'logistics', icon: '📦', title: 'LOJİSTİK / DETAY' }
+      {
+        id: 'A',
+        letter: 'A',
+        title: 'Hijyen / Cop',
+        tasks: [
+          'Lavabo ve ayna temizligi',
+          'Cop kovalarini bosaltma',
+          'Genel hijyen kontrolu',
+          'Sabun ve kagit havlu kontrolu',
+          'Tuvalet temizligi'
+        ],
+        monthEndTask: 'Derinlemesine dezenfeksiyon'
+      },
+      {
+        id: 'B',
+        letter: 'B',
+        title: 'Mutfak',
+        tasks: [
+          'Bulasiklari yikama/makineye yerlestirme',
+          'Tezgah ve ocak temizligi',
+          'Buzdolabi duzenleme',
+          'Cay/kahve hazir tutma',
+          'Mutfak malzemesi eksik bildirimi'
+        ],
+        monthEndTask: 'Buzdolabi temizligi + SKT kontrolu'
+      },
+      {
+        id: 'C',
+        letter: 'C',
+        title: 'Robot / Teknik',
+        tasks: [
+          'Robot supurgeyi calistir ve bosalt',
+          'Kablo ve sarj duzeni',
+          'Teknik cihaz kontrolu',
+          'Klima/isitma ayarlari',
+          'Aydinlatma kontrolu'
+        ],
+        monthEndTask: 'Tum elektronik cihaz bakimi'
+      },
+      {
+        id: 'D',
+        letter: 'D',
+        title: 'Lojistik / Detay',
+        tasks: [
+          'Genel duzenleme ve toplama',
+          'Posta/kargo takibi',
+          'Ofis malzemesi envanteri',
+          'Bitki sulama',
+          'Pencere ve cam temizligi'
+        ],
+        monthEndTask: 'Aylik envanter raporu + siparis'
+      }
     ];
 
-    // State - Default 4 people
+    // State
     let state = {
       staffCount: 4,
       staffNames: ['', '', '', ''],
       monthOffset: 0
     };
 
-    // DOM Elements
+    // DOM
     const monthDisplay = document.getElementById('monthDisplay');
     const staffInputs = document.getElementById('staffInputs');
     const staffCountDisplay = document.getElementById('staffCountDisplay');
@@ -552,7 +485,7 @@
     const monthGrid = document.getElementById('monthGrid');
     const printBtn = document.getElementById('printBtn');
 
-    // Utility Functions
+    // Utilities
     function getTargetMonth() {
       const today = new Date();
       today.setMonth(today.getMonth() + state.monthOffset);
@@ -562,33 +495,20 @@
     function getFridaysInMonth(year, month) {
       const fridays = [];
       const date = new Date(year, month, 1);
-
-      // Find first Friday
-      while (date.getDay() !== 5) {
-        date.setDate(date.getDate() + 1);
-      }
-
-      // Collect all Fridays
+      while (date.getDay() !== 5) date.setDate(date.getDate() + 1);
       while (date.getMonth() === month) {
         fridays.push(new Date(date));
         date.setDate(date.getDate() + 7);
       }
-
       return fridays;
     }
 
-    function isLastFridayOfMonth(friday, allFridays) {
-      return friday.getTime() === allFridays[allFridays.length - 1].getTime();
-    }
-
     function formatDate(date) {
-      const options = { day: 'numeric', month: 'long' };
-      return date.toLocaleDateString('tr-TR', options);
+      return date.toLocaleDateString('tr-TR', { day: 'numeric', month: 'long' });
     }
 
     function formatMonthYear(date) {
-      const options = { month: 'long', year: 'numeric' };
-      return date.toLocaleDateString('tr-TR', options);
+      return date.toLocaleDateString('tr-TR', { month: 'long', year: 'numeric' }).toUpperCase();
     }
 
     function getWeekNumber(date) {
@@ -597,17 +517,13 @@
       return Math.ceil((days + startOfYear.getDay() + 1) / 7);
     }
 
-    // Rotation Algorithm
     function getPersonForRole(roleIndex, friday) {
       const weekNum = getWeekNumber(friday);
-      const assignedPersonIndex = (roleIndex + weekNum) % state.staffCount;
-      return {
-        index: assignedPersonIndex,
-        name: state.staffNames[assignedPersonIndex] || `Kisi ${assignedPersonIndex + 1}`
-      };
+      const idx = (roleIndex + weekNum) % state.staffCount;
+      return state.staffNames[idx] || `Kisi ${idx + 1}`;
     }
 
-    // LocalStorage
+    // Storage
     function saveState() {
       localStorage.setItem('chores_state', JSON.stringify({
         staffCount: state.staffCount,
@@ -618,21 +534,17 @@
     function loadState() {
       const saved = localStorage.getItem('chores_state');
       if (saved) {
-        const parsed = JSON.parse(saved);
-        state.staffCount = parsed.staffCount || 4;
-        state.staffNames = parsed.staffNames || ['', '', '', ''];
-        // Ensure we have enough slots
-        while (state.staffNames.length < state.staffCount) {
-          state.staffNames.push('');
-        }
+        const p = JSON.parse(saved);
+        state.staffCount = p.staffCount || 4;
+        state.staffNames = p.staffNames || ['', '', '', ''];
+        while (state.staffNames.length < state.staffCount) state.staffNames.push('');
       }
     }
 
-    // Render Functions
+    // Render
     function renderStaffInputs() {
       staffInputs.innerHTML = '';
-      staffCountDisplay.textContent = `${state.staffCount} Kisi`;
-
+      staffCountDisplay.textContent = state.staffCount;
       decreaseStaff.disabled = state.staffCount <= 2;
       increaseStaff.disabled = state.staffCount >= 4;
 
@@ -640,21 +552,15 @@
         const div = document.createElement('div');
         div.className = 'staff-input';
         div.innerHTML = `
-          <label>Kisi ${i + 1}</label>
-          <input
-            type="text"
-            placeholder="Isim girin..."
-            value="${state.staffNames[i] || ''}"
-            data-index="${i}"
-          >
+          <label>Kisi ${String.fromCharCode(65 + i)}:</label>
+          <input type="text" placeholder="Isim..." value="${state.staffNames[i] || ''}" data-index="${i}">
         `;
         staffInputs.appendChild(div);
       }
 
       staffInputs.querySelectorAll('input').forEach(input => {
         input.addEventListener('input', (e) => {
-          const index = parseInt(e.target.dataset.index);
-          state.staffNames[index] = e.target.value;
+          state.staffNames[parseInt(e.target.dataset.index)] = e.target.value;
           saveState();
           renderMonth();
         });
@@ -662,49 +568,46 @@
     }
 
     function renderMonth() {
-      const targetDate = getTargetMonth();
-      const year = targetDate.getFullYear();
-      const month = targetDate.getMonth();
-      const fridays = getFridaysInMonth(year, month);
-
-      monthDisplay.textContent = formatMonthYear(targetDate);
+      const target = getTargetMonth();
+      const fridays = getFridaysInMonth(target.getFullYear(), target.getMonth());
+      monthDisplay.textContent = formatMonthYear(target);
       monthGrid.innerHTML = '';
 
-      fridays.forEach((friday, weekIndex) => {
-        const isLastFriday = isLastFridayOfMonth(friday, fridays);
+      fridays.forEach((friday, i) => {
+        const isLast = i === fridays.length - 1;
+        const section = document.createElement('section');
+        section.className = `week-section${isLast ? ' month-end' : ''}`;
 
-        const weekRow = document.createElement('div');
-        weekRow.className = `week-row${isLastFriday ? ' month-end' : ''}`;
-
-        let headerHTML = `
-          <div class="week-header">
+        let html = `
+          <div class="week-header${isLast ? ' month-end-header' : ''}">
             <span class="week-date">${formatDate(friday)} Cuma</span>
-            ${isLastFriday ? '<span class="week-badge">AY SONU TEMİZLİĞİ</span>' : ''}
+            ${isLast ? '<span class="week-badge">Ay Sonu</span>' : ''}
           </div>
+          <div class="week-content">
         `;
 
-        let rolesHTML = '<div class="roles-row">';
+        ROLES.forEach((role, ri) => {
+          const person = getPersonForRole(ri, friday);
+          let tasksHtml = role.tasks.map(t => `<li>${t}</li>`).join('');
+          if (isLast) {
+            tasksHtml += `<li class="special">${role.monthEndTask}</li>`;
+          }
 
-        ROLES.forEach((role, roleIndex) => {
-          const person = getPersonForRole(roleIndex, friday);
-          rolesHTML += `
-            <div class="role-mini" data-role="${role.id}">
-              <div class="role-mini-header">
-                <span class="role-mini-icon">${role.icon}</span>
-                <span class="role-mini-title">${role.title}</span>
+          html += `
+            <div class="role-column">
+              <div class="role-header">
+                <div class="role-letter">${role.letter}</div>
+                <div class="role-title">${role.title}</div>
               </div>
-              <div class="role-mini-person">
-                <span class="role-mini-avatar">${person.name.charAt(0).toUpperCase() || '?'}</span>
-                <span class="role-mini-name">${person.name || 'Belirsiz'}</span>
-              </div>
+              <div class="role-person">${person}</div>
+              <ul class="role-tasks">${tasksHtml}</ul>
             </div>
           `;
         });
 
-        rolesHTML += '</div>';
-
-        weekRow.innerHTML = headerHTML + rolesHTML;
-        monthGrid.appendChild(weekRow);
+        html += '</div>';
+        section.innerHTML = html;
+        monthGrid.appendChild(section);
       });
     }
 
@@ -713,7 +616,7 @@
       renderMonth();
     }
 
-    // Event Handlers
+    // Events
     decreaseStaff.addEventListener('click', () => {
       if (state.staffCount > 2) {
         state.staffCount--;
@@ -732,26 +635,12 @@
       }
     });
 
-    prevMonth.addEventListener('click', () => {
-      state.monthOffset--;
-      render();
-    });
+    prevMonth.addEventListener('click', () => { state.monthOffset--; render(); });
+    todayMonth.addEventListener('click', () => { state.monthOffset = 0; render(); });
+    nextMonth.addEventListener('click', () => { state.monthOffset++; render(); });
+    printBtn.addEventListener('click', () => window.print());
 
-    todayMonth.addEventListener('click', () => {
-      state.monthOffset = 0;
-      render();
-    });
-
-    nextMonth.addEventListener('click', () => {
-      state.monthOffset++;
-      render();
-    });
-
-    printBtn.addEventListener('click', () => {
-      window.print();
-    });
-
-    // Initialize
+    // Init
     loadState();
     render();
   </script>
