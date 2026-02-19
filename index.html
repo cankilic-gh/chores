@@ -505,6 +505,11 @@
   <button type="button" class="print-btn" id="printBtn" title="Yazdir">P</button>
 
   <script>
+    // Base dates
+    const ROTATION_START = new Date(2026, 1, 20); // 20 Subat 2026 - rotation baslangici
+    const LAST_MONTHLY_CLEAN = new Date(2026, 1, 13); // 13 Subat 2026 - son aylik temizlik
+    const MONTHLY_INTERVAL = 4; // 4 hafta arayla aylik temizlik
+
     // Roles with detailed tasks
     const ROLES = [
       {
@@ -524,11 +529,10 @@
         title: 'Mutfak',
         tasks: [
           'Bulasik makinasinin calistirilmasi',
-          'Yemek masasinin silinmesi'
+          'Masa ve tezgahin silinmesi'
         ],
         monthEndTasks: [
           'Mutfak ve buzdolabinin temizlenmesi',
-          'Atilacaklarin atilmasi (SKT kontrolu)',
           'Clorox bezle genel mutfak temizligi (kahve lekesi vb)'
         ]
       },
@@ -537,8 +541,7 @@
         letter: 'C',
         title: 'Robot',
         tasks: [
-          'Robotun sularinin temizlenmesi ve doldurulmasi',
-          'Ofisin robot temizlik yapacak sekilde birakilmasi'
+          'Robot sularinin temizlenmesi ve yenilenmesi'
         ],
         monthEndTasks: [
           'Robotun hazne ve cleaning tray temizlenmesi'
@@ -604,16 +607,21 @@
       return date.toLocaleDateString('tr-TR', { month: 'long', year: 'numeric' }).toUpperCase();
     }
 
-    function getWeekNumber(date) {
-      const startOfYear = new Date(date.getFullYear(), 0, 1);
-      const days = Math.floor((date - startOfYear) / (24 * 60 * 60 * 1000));
-      return Math.ceil((days + startOfYear.getDay() + 1) / 7);
+    function getWeeksSinceStart(friday) {
+      const msPerWeek = 7 * 24 * 60 * 60 * 1000;
+      return Math.round((friday - ROTATION_START) / msPerWeek);
     }
 
     function getPersonForRole(roleIndex, friday) {
-      const weekNum = getWeekNumber(friday);
-      const idx = (roleIndex + weekNum) % state.staffCount;
+      const weekNum = getWeeksSinceStart(friday);
+      const idx = ((roleIndex + weekNum) % state.staffCount + state.staffCount) % state.staffCount;
       return state.staffNames[idx] || `Kisi ${idx + 1}`;
+    }
+
+    function isMonthlyCleaningDay(friday) {
+      const msPerWeek = 7 * 24 * 60 * 60 * 1000;
+      const weeksSinceLastClean = Math.round((friday - LAST_MONTHLY_CLEAN) / msPerWeek);
+      return weeksSinceLastClean > 0 && weeksSinceLastClean % MONTHLY_INTERVAL === 0;
     }
 
     // Storage
@@ -667,14 +675,14 @@
       monthGrid.innerHTML = '';
 
       fridays.forEach((friday, i) => {
-        const isLast = i === fridays.length - 1;
+        const isMonthly = isMonthlyCleaningDay(friday);
         const section = document.createElement('section');
-        section.className = `week-section${isLast ? ' month-end' : ''}`;
+        section.className = `week-section${isMonthly ? ' month-end' : ''}`;
 
         let html = `
-          <div class="week-header${isLast ? ' month-end-header' : ''}">
+          <div class="week-header${isMonthly ? ' month-end-header' : ''}">
             <span class="week-date">${formatDate(friday)} Cuma</span>
-            ${isLast ? '<span class="week-badge">Ay Sonu</span>' : ''}
+            ${isMonthly ? '<span class="week-badge">Aylik Temizlik</span>' : ''}
           </div>
           <div class="week-content">
         `;
@@ -682,7 +690,7 @@
         ROLES.forEach((role, ri) => {
           const person = getPersonForRole(ri, friday);
           let tasksHtml = role.tasks.map(t => `<li>${t}</li>`).join('');
-          if (isLast && role.monthEndTasks) {
+          if (isMonthly && role.monthEndTasks) {
             tasksHtml += role.monthEndTasks.map(t => `<li class="special">${t}</li>`).join('');
           }
 
